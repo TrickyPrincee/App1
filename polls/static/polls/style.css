@@ -52,3 +52,68 @@ li a {
 li a:hover {
     color: #ffffff;
 }
+
+.question-title {
+    color: #e94560;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.choice-list {
+    list-style: none;
+    padding: 0;
+}
+
+.choice-item {
+    background: #16213e;
+    margin: 10px 0;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #0f3460;
+    cursor: pointer;
+}
+
+.choice-item:hover {
+    border-left: 4px solid #e94560;
+}
+
+.choice-item label {
+    cursor: pointer;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vote-btn {
+    background: #e94560;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.vote-btn:hover {
+    background: #c73652;
+}
+
+.error {
+    color: #e94560;
+    background: #16213e;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 4px solid #e94560;
+}
+
+.header a {
+    color: #a8a8b3;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.header a:hover {
+    color: #ffffff;
+}
