@@ -1,6 +1,54 @@
-li a {
-    color: green;
-}
 body {
-    background: grey url("images/background.png") no-repeat;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1a1a2e;
+    color: #eaeaea;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #16213e;
+    padding: 40px;
+    text-align: center;
+    border-bottom: 3px solid #0f3460;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    color: #e94560;
+    margin: 0;
+}
+
+.header p {
+    color: #a8a8b3;
+    font-size: 1.1em;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #16213e;
+    margin: 10px 0;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #e94560;
+}
+
+li a {
+    color: #e94560;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+li a:hover {
+    color: #ffffff;
 }

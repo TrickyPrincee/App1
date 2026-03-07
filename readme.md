@@ -7,6 +7,11 @@ A Django polling application built following the official Django tutorial.
 2. Run migrations: `py manage.py migrate`
 3. Start server: `py manage.py runserver`
 
+##Admin Credentials
+User: admin
+Email: tp@project.com
+Pass: supertopsecret12
+
 ## Usage
 Visit http://127.0.0.1:8000/polls/ to view the app.
 Visit http://127.0.0.1:8000/admin/ to manage questions.

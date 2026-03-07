@@ -1,12 +1,35 @@
 {% extends "admin/base.html" %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block title %}Polls Admin{% endblock %}
 
 {% block branding %}
-<div id="site-name"><a href="{% url 'admin:index' %}">Polls Administration</a></div>
-{% if user.is_anonymous %}
-  {% include "admin/color_theme_toggle.html" %}
-{% endif %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">Polls Administration</a>
+</h1>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    #header {
+        background: #1a1a2e;
+        color: #e94560;
+    }
+    #header a:link, #header a:visited {
+        color: #e94560;
+    }
+    #branding h1 {
+        color: #e94560;
+    }
+    .module h2, .module caption, .inline-group h2 {
+        background: #16213e;
+    }
+</style>
+{% endblock %}
+```
+
+---
+
+For **renaming admin to pollsadmin**, run this in your terminal:
+```
+py manage.py changepassword admin
