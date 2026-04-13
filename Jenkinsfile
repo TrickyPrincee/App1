@@ -1,138 +1,41 @@
 pipeline {
     agent any
-    
+    environment {
+        EC2_USER = "ubuntu"
+        EC2_HOST = "18.209.240.168"
+        EC2_KEY = credentials('ec2-ssh-private-key')
+        PROJECT_DIR = "/home/ubuntu/pythonprojects/App1"
+    }
     triggers {
         githubPush()
     }
-
-    environment {
-        SITE_NAME = "jenkinstest"
-        WEB_ROOT  = "/var/www/jenkinstest"
-        NGINX_CONF = "/etc/nginx/sites-available/jenkinstest"
-    }
-
-    options {
-        timestamps()
-    }
-
     stages {
-
-        stage('Checkout') {
+        stage('Update Code on EC2') {
             steps {
-                git url: 'https://github.com/kestonbhola/jenkinstest.git/', branch: 'main'
-            }
-        }
-
-        stage('Verify Project Files') {
-            steps {
-                sh '''
-                    set -e
-                    echo "Checking required project files..."
-
-                    test -f index.html
-                    test -f sgustyle.css
-                    test -f sguscript.js
-
-                    echo "Required files found."
-                    ls -la
-                '''
-            }
-        }
-
-        stage('Install Nginx') {
-            steps {
-                sh '''
-                    set -e
-                    sudo apt update
-                    sudo apt install -y nginx
-                '''
-            }
-        }
-
-        stage('Create Web Root') {
-            steps {
-                sh '''
-                    set -e
-                    sudo mkdir -p "$WEB_ROOT"
-                    sudo chown -R jenkins:jenkins "$WEB_ROOT"
-                '''
-            }
-        }
-
-        stage('Deploy Website Files') {
-            steps {
-                sh '''
-                    set -e
-
-                    rm -rf "$WEB_ROOT"/*
-                    cp index.html "$WEB_ROOT"/
-                    cp sgustyle.css "$WEB_ROOT"/
-                    cp sguscript.js "$WEB_ROOT"/
-
-                    [ -f grenada.jpeg ] && cp grenada.jpeg "$WEB_ROOT"/ || true
-                    [ -f grenada-updated.jpeg ] && cp grenada-updated.jpeg "$WEB_ROOT"/ || true
-
-                    echo "Deployed files:"
-                    ls -la "$WEB_ROOT"
-                '''
-            }
-        }
-
-        stage('Configure Nginx Site') {
-            steps {
-                sh '''
-                    set -e
-
-                    sudo bash -c "cat > $NGINX_CONF" <<EOF
-server {
-    listen 80;
-    server_name _;
-
-    root $WEB_ROOT;
-    index index.html;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-EOF
-
-                    sudo ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/jenkinstest
-                    sudo rm -f /etc/nginx/sites-enabled/default
-
-                    sudo nginx -t
-                '''
-            }
-        }
-
-        stage('Start Nginx') {
-            steps {
-                sh '''
-                    set -e
-                    sudo systemctl enable nginx
-                    sudo systemctl restart nginx
-                    sudo systemctl status nginx --no-pager
-                '''
-            }
-        }
-
-        stage('Test Website Locally') {
-            steps {
-                sh '''
-                    set -e
-                    curl -I http://localhost
-                '''
+                script {
+                    sshagent (credentials: ['ec2-ssh-private-key']) {
+                        sh """
+                        ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} '
+                            cd ${PROJECT_DIR}
+                            git pull origin main
+                            python3 -m venv comp314
+                            source comp314/bin/activate
+                            python3 -m pip install -r requirements.txt
+                            python3 manage.py migrate --noinput
+                            python3 manage.py runserver 0.0.0.0:8000 &
+                        '
+                        """
+                    }
+                }
             }
         }
     }
-
     post {
         success {
-            echo 'Deployment successful.'
-            echo 'Open your EC2 public IP in a browser to view the site.'
+            echo "Code updated and app restarted successfully on EC2!"
         }
         failure {
-            echo 'Deployment failed. Check the Jenkins console output.'
+            echo "Deployment failed."
         }
     }
 }
