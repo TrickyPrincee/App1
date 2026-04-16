@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         EC2_USER = "ubuntu"
-        EC2_HOST = "18.209.240.168"
+        EC2_HOST = "13.222.17.101"
         EC2_KEY = credentials('ec2-ssh-private-key')
         PROJECT_DIR = "/home/ubuntu/pythonprojects/App1"
     }
