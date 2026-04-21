@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'princeoby/pollsapp'
         EC2_USER = "ubuntu"
-        EC2_HOST = "3.237.97.226"
+        EC2_HOST = "13.219.227.55"
         EC2_KEY = credentials('ec2-ssh-private-key')
         DOCKER_CREDS = 'efed61b0-6b31-46d8-b64a-249f9df26930'
         PROJECT_DIR = "/home/ubuntu/pythonprojects/App1"
