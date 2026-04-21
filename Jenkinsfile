@@ -5,18 +5,11 @@ pipeline {
         EC2_USER = "ubuntu"
         EC2_HOST = "98.92.188.244"
         EC2_KEY = credentials('ec2-ssh-private-key')
-        DOCKER_CREDS = 'docker-hub-credentials'
+        DOCKER_CREDS = 'efed61b0-6b31-46d8-b64a-249f9df26930'
         PROJECT_DIR = "/home/ubuntu/pythonprojects/App1"
     }
 
-        stages {
-        stage('Clone Repository') {
-            steps {
-                // (MODIFY: Enter your GitHub repository URL)
-                git branch: 'main', url: 'https://github.com/TrickyPrincee/App1.git'
-            }
-        }
-
+    stages {  // <-- THIS WAS MISSING - ADD THIS LINE
         stage('Build Docker Image') {
             steps {
                 script {
@@ -55,7 +48,7 @@ pipeline {
                 }
             }
         }
-    }
+    }  // <-- CLOSE THE STAGES BLOCK - ADD THIS LINE
 
     post {
         success {
