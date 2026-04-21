@@ -1,7 +1,7 @@
 FROM python:3.13.3-slim as base
 
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=hello_world.settings
+ENV DJANGO_SETTINGS_MODULE=App1.settings
 
 RUN apt-get update && apt-get install -y \
     libpq-dev \
@@ -27,5 +27,5 @@ EXPOSE 80
 # Run migrations and collectstatic at container startup, not build time
 CMD sh -c "python manage.py migrate --noinput && \
            python manage.py collectstatic --noinput && \
-           gunicorn --bind 127.0.0.1:8000 hello_world.wsgi:application & \
+           gunicorn --bind 127.0.0.1:8000 App1.wsgi:application & \
            nginx -g 'daemon off;'"
