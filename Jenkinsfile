@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+    buildDiscarder(logRotator(numToKeepStr: '3'))
+}
     environment {
         DOCKER_IMAGE = 'princeoby/pollsapp'
         EC2_USER = "ubuntu"
