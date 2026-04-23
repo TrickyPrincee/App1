@@ -12,7 +12,7 @@ pipeline {
         PROJECT_DIR = "/home/ubuntu/pythonprojects/App1"
     }
 
-    stages {  // <-- THIS WAS MISSING - ADD THIS LINE
+    stages { 
         stage('Build Docker Image') {
             steps {
                 script {
@@ -51,7 +51,7 @@ pipeline {
                 }
             }
         }
-    }  // <-- CLOSE THE STAGES BLOCK - ADD THIS LINE
+    }
 
     post {
         success {
