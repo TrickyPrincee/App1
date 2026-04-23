@@ -12,6 +12,6 @@ User: admin
 Email: tp@project.com
 Pass: supertopsecret12
 
-## Usage!
+## Usage
 Visit http://127.0.0.1:8000/polls/ to view the app.
 Visit http://127.0.0.1:8000/admin/ to manage questions.
